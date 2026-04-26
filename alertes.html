@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Configuració d'Alertes — CrackiTrading</title>
+    <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@600&family=Instrument+Sans:wght@400;500;600&family=DM+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #fafaf7; --grey-900: #1a1a17; --grey-800: #2c2c28;
+            --yellow: #f5e642; --grey-200: #e8e8e5; --radius: 12px;
+        }
+        body {
+            background: var(--cream);
+            font-family: 'Instrument Sans', sans-serif;
+            color: var(--grey-900);
+            padding: 40px;
+        }
+        .config-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: var(--radius);
+            border: 1px solid var(--grey-200);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+        }
+        h1 { font-family: 'Clash Display', sans-serif; font-size: 32px; margin-bottom: 8px; }
+        p { color: #666; margin-bottom: 32px; }
+
+        .setup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+        
+        .card {
+            border: 2px solid var(--grey-200);
+            padding: 24px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .card:hover { border-color: var(--yellow); }
+        .card.active { border-color: var(--yellow); background: #fefce8; }
+        .card h3 { margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        
+        .input-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; }
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--grey-200);
+            font-family: 'DM Mono', monospace;
+            font-size: 14px;
+        }
+        
+        .btn-save {
+            background: var(--grey-900);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        .btn-save:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+<div class="config-container">
+    <h1>Configuració de l'Algoritme</h1>
+    <p>Defineix com vols que l'Atheneum busqui oportunitats al mercat.</p>
+
+    <div class="setup-grid">
+        <div class="card active">
+            <h3>🎯 Mode Franctirador</h3>
+            <p style="font-size: 13px;">Operacions ràpides (Scalping). Entra en pics de volum i surt en 5-15 minuts.</p>
+        </div>
+        <div class="card">
+            <h3>🔍 Mode Explorador</h3>
+            <p style="font-size: 13px;">Busca tendències diàries. Menys risc, operacions més llargues de 2-4 hores.</p>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label>Telegram Chat ID (Per rebre notificacions)</label>
+        <input type="text" placeholder="Ex: 123456789">
+    </div>
+
+    <div class="input-group">
+        <label>Binance API Key (Només lectura/trading)</label>
+        <input type="password" placeholder="La teva clau de Binance">
+    </div>
+
+    <div class="input-group">
+        <label>Secret Key</label>
+        <input type="password" placeholder="El teu secret de Binance">
+    </div>
+
+    <button class="btn-save">Guardar Configuració i Activar Bot</button>
+</div>
+
+<script>
+    // Aquí podríem afegir interactivitat per triar les cards
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', () => {
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>

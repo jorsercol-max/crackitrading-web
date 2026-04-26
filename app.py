@@ -2,6 +2,30 @@ import streamlit as st
 import streamlit.components.v1 as components
 import os
 
+# --- CODI DE SEGURETAT PER AMAGAR MENÚS ---
+st.markdown("""
+    <style>
+    /* Amaga el menú de la dreta (els 3 punts de Streamlit) */
+    #MainMenu {visibility: hidden;}
+    
+    /* Amaga la barra de dalt (header) */
+    header {visibility: hidden;}
+    
+    /* Amaga el peu de pàgina "Made with Streamlit" */
+    footer {visibility: hidden;}
+    
+    /* Amaga el botó de 'Deploy' i 'Manage App' per a l'usuari final */
+    .stAppDeployButton {display:none;}
+    [data-testid="stStatusWidget"] {visibility: hidden;}
+    
+    /* Elimina espais en blanc innecessaris a dalt */
+    .block-container {
+        padding-top: 0rem;
+        padding-bottom: 0rem;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
 # Configuració de la pàgina
 st.set_page_config(page_title="CrackiTrading", layout="wide", initial_sidebar_state="collapsed")
 

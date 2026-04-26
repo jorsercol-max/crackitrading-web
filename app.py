@@ -2,7 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import os
 
-st.set_page_config(page_title="CrackiTrading", layout="wide")
+st.set_page_config(page_title="CRACKI V3 TEST", layout="wide")
 
 if 'pagina' not in st.session_state:
     st.session_state.pagina = "LANDING"

@@ -29,6 +29,37 @@ st.markdown("""
 # Configuració de la pàgina
 st.set_page_config(page_title="CrackiTrading", layout="wide", initial_sidebar_state="collapsed")
 
+# --- BLINDATGE TOTAL CONTRA STREAMLIT ---
+st.markdown("""
+    <style>
+    /* 1. Amaga la barra de dalt i els menús de configuració */
+    header {visibility: hidden !important;}
+    #MainMenu {visibility: hidden !important;}
+    
+    /* 2. Amaga el botó de 'Deploy' i el de 'Manage App' */
+    .stAppDeployButton {display:none !important;}
+    div[data-testid="stStatusWidget"] {visibility: hidden !important;}
+    
+    /* 3. Amaga el peu de pàgina 'Made with Streamlit' i 'Hosted by...' */
+    footer {display: none !important;}
+    .viewerBadge_container__1QS13 {display: none !important;}
+    .viewerBadge_link__1S13K {display: none !important;}
+    
+    /* 4. Amaga qualsevol referència al nom d'usuari a la barra superior */
+    [data-testid="stHeader"] {display: none !important;}
+    
+    /* 5. Ajusta els marges perquè no quedi un forat blanc a dalt */
+    .main .block-container {
+        padding-top: 0rem !important;
+        padding-bottom: 0rem !important;
+        max-width: 100% !important;
+    }
+    
+    /* 6. Amaga el menú d'opcions del visualitzador d'imatges/codi */
+    button[title="View fullscreen"] {display: none !important;}
+    </style>
+    """, unsafe_allow_html=True)
+
 # Inicialitzem l'estat de la sessió si no existeix
 if 'page' not in st.session_state:
     st.session_state.page = 'landing'

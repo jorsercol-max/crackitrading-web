@@ -2,128 +2,63 @@ import streamlit as st
 import streamlit.components.v1 as components
 import os
 
-# --- CODI DE SEGURETAT PER AMAGAR MENÚS ---
-st.markdown("""
-    <style>
-    /* Amaga el menú de la dreta (els 3 punts de Streamlit) */
-    #MainMenu {visibility: hidden;}
-    
-    /* Amaga la barra de dalt (header) */
-    header {visibility: hidden;}
-    
-    /* Amaga el peu de pàgina "Made with Streamlit" */
-    footer {visibility: hidden;}
-    
-    /* Amaga el botó de 'Deploy' i 'Manage App' per a l'usuari final */
-    .stAppDeployButton {display:none;}
-    [data-testid="stStatusWidget"] {visibility: hidden;}
-    
-    /* Elimina espais en blanc innecessaris a dalt */
-    .block-container {
-        padding-top: 0rem;
-        padding-bottom: 0rem;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-# Configuració de la pàgina
+# 1. CONFIGURACIÓ DE LA PÀGINA
 st.set_page_config(page_title="CrackiTrading", layout="wide", initial_sidebar_state="collapsed")
 
-# --- BLINDATGE TOTAL CONTRA STREAMLIT ---
-st.markdown("""
-    <style>
-    /* 1. Amaga la barra de dalt i els menús de configuració */
-    header {visibility: hidden !important;}
-    #MainMenu {visibility: hidden !important;}
+# 2. INICIALITZACIÓ DE L'ESTAT
+if 'pagina' not in st.session_state:
+    st.session_state.pagina = "LANDING"
+
+# 3. FUNCIÓ PER CARREGAR HTML (Mètode robust per a Streamlit Cloud)
+def carregar_html(nom_fitxer):
+    # Obtenim la ruta del directori on està l'app.py
+    directori_actual = os.path.dirname(os.path.abspath(__file__))
+    # Ajuntem la ruta amb la carpeta 'pagines' i el fitxer
+    ruta = os.path.join(directori_actual, "pagines", nom_fitxer)
     
-    /* 2. Amaga el botó de 'Deploy' i el de 'Manage App' */
-    .stAppDeployButton {display:none !important;}
-    div[data-testid="stStatusWidget"] {visibility: hidden !important;}
+    try:
+        with open(ruta, 'r', encoding='utf-8') as f:
+            return f.read()
+    except FileNotFoundError:
+        return f"<h1>Error: No s'ha trobat el fitxer {nom_fitxer} a la ruta {ruta}</h1>"
+
+# 4. NAVEGACIÓ
+def main():
+    estat = st.session_state.pagina
     
-    /* 3. Amaga el peu de pàgina 'Made with Streamlit' i 'Hosted by...' */
-    footer {display: none !important;}
-    .viewerBadge_container__1QS13 {display: none !important;}
-    .viewerBadge_link__1S13K {display: none !important;}
-    
-    /* 4. Amaga qualsevol referència al nom d'usuari a la barra superior */
-    [data-testid="stHeader"] {display: none !important;}
-    
-    /* 5. Ajusta els marges perquè no quedi un forat blanc a dalt */
-    .main .block-container {
-        padding-top: 0rem !important;
-        padding-bottom: 0rem !important;
-        max-width: 100% !important;
+    fitxers = {
+        "LANDING": "landing.html",
+        "LOGIN": "inici.html",
+        "REGISTRE": "registre.html",
+        "PAGAMENT": "pagament.html"
     }
     
-    /* 6. Amaga el menú d'opcions del visualitzador d'imatges/codi */
-    button[title="View fullscreen"] {display: none !important;}
-    </style>
-    """, unsafe_allow_html=True)
-
-# Inicialitzem l'estat de la sessió si no existeix
-if 'page' not in st.session_state:
-    st.session_state.page = 'landing'
-if 'autenticat' not in st.session_state:
-    st.session_state.autenticat = False
-
-# Funció per carregar fitxers HTML
-def carregar_html(fitxer):
-    if os.path.exists(fitxer):
-        with open(fitxer, 'r', encoding='utf-8') as f:
-            return f.read()
-    return f"<h1>Error: {fitxer} no trobat</h1>"
-
-# --- LÒGICA DE NAVEGACIÓ ---
-
-# 1. LANDING PAGE
-if st.session_state.page == 'landing':
-    html_landing = carregar_html('landing.html')
-    # Captura el missatge del botó de la Landing
-    seleccionat = components.html(html_landing, height=2000, scrolling=True)
-    
-    # Truc per detectar si han clicat "Accés Clients"
-    # (Com que l'HTML envia un missatge, el gestionem aquí)
-    st.button("Entrar al Sistema (Provisional)", on_click=lambda: st.session_state.update({"page": "login"}))
-
-# 2. PÀGINA DE LOGIN / REGISTRE
-elif st.session_state.page == 'login':
-    html_login = carregar_html('inici.html') # El teu inici.html
-    components.html(html_login, height=800)
-    
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("← Tornar a l'Inici"):
-            st.session_state.page = 'landing'
-            st.rerun()
-    with col2:
-        if st.button("Validar Accés (Demo)"):
-            st.session_state.autenticat = True
-            st.session_state.page = 'escriptori'
-            st.rerun()
-
-# 3. ESCRIPTORI (DASHBOARD)
-elif st.session_state.page == 'escriptori':
-    if not st.session_state.autenticat:
-        st.session_state.page = 'login'
-        st.rerun()
+    if estat in fitxers:
+        contingut = carregar_html(fitxers[estat])
         
-    html_escriptori = carregar_html('escriptori.html')
-    components.html(html_escriptori, height=1000)
-    
-    if st.sidebar.button("Tancar Sessió"):
-        st.session_state.autenticat = False
-        st.session_state.page = 'landing'
-        st.rerun()
-    
-    if st.sidebar.button("Configurar Alertes"):
-        st.session_state.page = 'alertes'
-        st.rerun()
+        # El retorn de dades des de l'HTML (per als botons)
+        res = components.html(contingut, height=1200, scrolling=True, key=f"comp_{estat}")
+        
+        # Lògica de canvi de pàgina segons el que enviï el JS
+        if res == "GOTO_LOGIN":
+            st.session_state.pagina = "LOGIN"
+            st.rerun()
+        elif res == "GOTO_REGISTRE":
+            st.session_state.pagina = "REGISTRE"
+            st.rerun()
+        elif res == "GOTO_LANDING":
+            st.session_state.pagina = "LANDING"
+            st.rerun()
+        elif res and "LOGIN_OK" in str(res):
+            st.session_state.pagina = "DASHBOARD"
+            st.rerun()
+            
+    elif estat == "DASHBOARD":
+        st.title("🚀 Panell de Control CrackiTrading")
+        st.write("Benvingut a l'escriptori del bot Atheneum.")
+        if st.button("Sortir"):
+            st.session_state.pagina = "LANDING"
+            st.rerun()
 
-# 4. CONFIGURACIÓ D'ALERTES
-elif st.session_state.page == 'alertes':
-    html_alertes = carregar_html('alertes.html')
-    components.html(html_alertes, height=1000)
-    
-    if st.button("← Tornar a l'Escriptori"):
-        st.session_state.page = 'escriptori'
-        st.rerun()
+if __name__ == "__main__":
+    main()

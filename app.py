@@ -2,30 +2,30 @@ import streamlit as st
 import streamlit.components.v1 as components
 import os
 
-# Configura la pàgina
 st.set_page_config(page_title="CrackiTrading", layout="wide")
 
-# Inicialitza l'estat
 if 'pagina' not in st.session_state:
     st.session_state.pagina = "LANDING"
 
 def carregar_html(nom_fitxer):
-    # Ruta absoluta per a Streamlit Cloud
-    directori_actual = os.path.dirname(os.path.abspath(__file__))
-    ruta = os.path.join(directori_actual, "pagines", nom_fitxer)
+    # Intentem trobar la ruta de forma manual i neta
+    base_path = os.path.dirname(__file__)
+    ruta = os.path.join(base_path, "pagines", nom_fitxer)
     
     if not os.path.exists(ruta):
-        return f"<h1>⚠️ Error: No s'ha trobat el fitxer {nom_fitxer}</h1><p>Ruta: {ruta}</p>"
+        return f"<body><h1>❌ Fitxer no trobat</h1><p>No trobo {nom_fitxer} a {ruta}</p></body>"
     
     try:
         with open(ruta, 'r', encoding='utf-8') as f:
-            return f.read()
+            contingut = f.read()
+            if not contingut.strip():
+                return "<body><h1>⚠️ Fitxer buit</h1></body>"
+            return contingut
     except Exception as e:
-        return f"<h1>⚠️ Error llegint {nom_fitxer}</h1><p>{str(e)}</p>"
+        return f"<body><h1>❌ Error de lectura</h1><p>{str(e)}</p></body>"
 
 def main():
-    estat = st.session_state.pagina
-    
+    # Diccionari de pàgines
     fitxers = {
         "LANDING": "landing.html",
         "LOGIN": "inici.html",
@@ -33,27 +33,15 @@ def main():
         "PAGAMENT": "pagament.html"
     }
     
-    # Agafem el nom del fitxer o landing per defecte
-    nom_arxiu = fitxers.get(estat, "landing.html")
-    contingut = carregar_html(nom_arxiu)
+    nom_arxiu = fitxers.get(st.session_state.pagina, "landing.html")
+    html_final = carregar_html(nom_arxiu)
 
-    # SEGURETAT: Si 'contingut' no és una cadena de text, Streamlit peta.
-    # Ens assegurem que sempre sigui text.
-    if contingut:
-        res = components.html(str(contingut), height=1200, scrolling=True, key=f"c_{estat}")
-        
-        # Lògica de navegació
-        if res == "GOTO_LOGIN":
-            st.session_state.pagina = "LOGIN"
-            st.rerun()
-        elif res == "GOTO_REGISTRE":
-            st.session_state.pagina = "REGISTRE"
-            st.rerun()
-        elif res == "GOTO_LANDING":
-            st.session_state.pagina = "LANDING"
-            st.rerun()
-    else:
-        st.error(f"No s'ha pogut carregar cap contingut per a: {estat}")
+    # El TypeError sol venir d'aquí. Forcem que sigui STRING.
+    try:
+        components.html(str(html_final), height=1000, scrolling=True)
+    except Exception as e:
+        st.error(f"Error crític de Streamlit: {e}")
+        st.code(html_final[:500]) # Mostrem els primers 500 caràcters per veure què hi ha
 
 if __name__ == "__main__":
     main()

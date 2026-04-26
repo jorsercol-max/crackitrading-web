@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CrackiTrading — Crear compte</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --cream:#fafaf7;--white:#ffffff;--yellow:#f5e642;--yellow2:#ede034;
+      --grey-200:#e8e8e5;--grey-300:#d0d0cc;--grey-400:#a8a8a2;--grey-600:#6b6b66;
+      --grey-800:#2c2c28;--grey-900:#1a1a17;--green-ok:#2d7a4f;--red:#c0392b;
+      --shadow-md:0 8px 32px rgba(0,0,0,0.09);--font-body:'Instrument Sans',sans-serif;--font-mono:'DM Mono',monospace;--radius:10px;
+    }
+    body{min-height:100vh;background:var(--cream);font-family:var(--font-body);display:flex;flex-direction:column}
+    nav{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--grey-200);background:var(--white)}
+    .logo{font-size:18px;font-weight:700;color:var(--grey-900);display:flex;align-items:center;gap:8px;text-decoration:none}
+    .logo-badge{background:var(--yellow);width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px}
+    .page{flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 62px)}
+    .left{background:var(--grey-900);padding:64px;display:flex;flex-direction:column;justify-content:space-between;color:white}
+    .left h2{font-size:38px;font-weight:700;letter-spacing:-1.5px;line-height:1.1}
+    .left h2 em{font-style:normal;background:var(--yellow);color:var(--grey-900);padding:0 5px;border-radius:3px}
+    .perks{margin-top:40px;display:flex;flex-direction:column;gap:16px}
+    .perk{display:flex;align-items:flex-start;gap:14px;font-size:14px;opacity:0.8}
+    .right{display:flex;align-items:center;justify-content:center;padding:48px 40px;overflow-y:auto}
+    .form-box{width:100%;max-width:420px}
+    .field{margin-bottom:18px}
+    .field label{display:block;font-size:13px;font-weight:600;margin-bottom:7px}
+    .field input{width:100%;padding:12px;border-radius:var(--radius);border:1.5px solid var(--grey-200);outline:none}
+    .field input:focus{border-color:var(--yellow2)}
+    .field.has-error input{border-color:var(--red)}
+    .field-error{font-size:12px;color:var(--red);margin-top:5px;display:none}
+    .field.has-error .field-error{display:block}
+    .btn-submit{width:100%;padding:14px;background:var(--grey-900);color:white;border:none;border-radius:var(--radius);font-weight:600;cursor:pointer;margin-top:10px}
+    .success-box{text-align:center;display:none}
+    .success-box.show{display:block}
+    @media(max-width:768px){.left{display:none}.page{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="javascript:void(0)" onclick="anarInici()" class="logo"><div class="logo-badge">⚡</div>CrackiTrading</a>
+  <div style="font-size:14px">Ja tens compte? <a href="javascript:void(0)" onclick="anarLogin()" style="color:black; font-weight:600">Inicia sessió</a></div>
+</nav>
+
+<div class="page">
+  <div class="left">
+    <div>
+      <div style="font-family:var(--font-mono); font-size:11px; opacity:0.4; letter-spacing:3px; margin-bottom:30px;">// REGISTRE</div>
+      <h2>El teu bot treballarà<br>mentre tu <em>descanses</em></h2>
+      <div class="perks">
+        <div class="perk"><span>🤖</span> <div><strong>Bot actiu 24/7</strong> — Opera mentre dorms o treballes</div></div>
+        <div class="perk"><span>🛡️</span> <div><strong>Stop Loss automàtic</strong> — Risc controlat en cada trade</div></div>
+        <div class="perk"><span>📱</span> <div><strong>Notificacions Telegram</strong> — Control total al teu mòbil</div></div>
+      </div>
+    </div>
+    <div style="opacity:0.3; font-size:12px;">© 2025 CrackiTrading</div>
+  </div>
+
+  <div class="right">
+    <div class="form-box">
+      <div id="formMain">
+        <h1 style="font-size:26px; margin-bottom:8px;">Crear compte</h1>
+        <p style="color:var(--grey-600); font-size:14px; margin-bottom:30px;">Uneix-te a la comunitat de CrackiTrading.</p>
+
+        <form id="registerForm">
+          <div class="field" id="fieldNom">
+            <label>Nom</label>
+            <input type="text" id="nom" placeholder="Joan" required>
+          </div>
+          <div class="field" id="fieldEmail">
+            <label>Correu electrònic</label>
+            <input type="email" id="email" placeholder="nom@exemple.com" required>
+          </div>
+          <div class="field" id="fieldPassword">
+            <label>Contrasenya</label>
+            <input type="password" id="password" placeholder="Mínim 8 caràcters" required>
+          </div>
+          <button type="submit" class="btn-submit" id="btnSubmit">Crear compte</button>
+        </form>
+      </div>
+
+      <div class="success-box" id="successBox">
+        <div style="font-size:50px; margin-bottom:20px;">🎉</div>
+        <h2 style="font-size:24px; margin-bottom:10px;">Compte creat!</h2>
+        <p style="color:var(--grey-600); margin-bottom:30px;">Benvingut a CrackiTrading. Ara ja pots accedir al teu panell.</p>
+        <button onclick="anarLogin()" class="btn-submit">Anar al Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // FUNCIONS PER NAVEGAR DINS DE STREAMLIT
+  function anarLogin() {
+    window.parent.postMessage({ type: 'streamlit:setComponentValue', value: "GOTO_LOGIN" }, '*');
+  }
+  function anarInici() {
+    window.parent.postMessage({ type: 'streamlit:setComponentValue', value: "GOTO_LANDING" }, '*');
+  }
+
+  // --- GESTIÓ DEL FORMULARI I CONNEXIÓ AMB PYTHON ---
+  document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const nom = document.getElementById('nom').value;
+    const email = document.getElementById('email').value;
+    const pass = document.getElementById('password').value;
+    const btn = document.getElementById('btnSubmit');
+
+    btn.textContent = 'Creant...';
+    btn.disabled = true;
+
+    // --- EL CANVI CLAU: Enviem les dades al fitxer app.py ---
+    const dadesRegistre = "REGISTRE|" + nom + "|" + email + "|" + pass;
+    
+    window.parent.postMessage({
+      type: 'streamlit:setComponentValue',
+      value: dadesRegistre
+    }, '*');
+
+    // Mostrem l'èxit visualment
+    setTimeout(() => {
+      document.getElementById('formMain').style.display = 'none';
+      document.getElementById('successBox').classList.add('show');
+    }, 1500);
+  });
+</script>
+</body>
+</html>

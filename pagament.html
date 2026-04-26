@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CrackiTrading — Activar bot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --cream:#fafaf7;--white:#ffffff;--yellow:#f5e642;--yellow2:#ede034;
+      --yellow-pale:#fefce8;--grey-100:#f4f4f2;--grey-200:#e8e8e5;
+      --grey-300:#d0d0cc;--grey-400:#a8a8a2;--grey-600:#6b6b66;
+      --grey-800:#2c2c28;--grey-900:#1a1a17;--green-ok:#2d7a4f;--red:#c0392b;
+      --shadow-sm:0 2px 8px rgba(0,0,0,0.06);--shadow-md:0 8px 32px rgba(0,0,0,0.09);
+      --font-body:'Instrument Sans',sans-serif;--font-mono:'DM Mono',monospace;--radius:10px;
+    }
+    body{min-height:100vh;background:var(--grey-100);font-family:var(--font-body)}
+    nav{padding:18px 40px;display:flex;align-items:center;justify-content:space-between;background:var(--white);border-bottom:1px solid var(--grey-200)}
+    .logo{font-size:18px;font-weight:700;color:var(--grey-900);display:flex;align-items:center;gap:8px;text-decoration:none}
+    .logo-badge{background:var(--yellow);width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px}
+    .steps-nav{background:var(--white);border-bottom:1px solid var(--grey-200);padding:16px 40px;display:flex;justify-content:center}
+    .steps-track{display:flex;align-items:center;gap:0;max-width:480px;width:100%}
+    .s-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600}
+    .s-dot.done{background:var(--yellow);color:var(--grey-900)}
+    .s-dot.active{background:var(--grey-900);color:white}
+    .s-line{flex:1;height:2px;background:var(--grey-200)}
+    .s-line.done{background:var(--yellow)}
+    .s-label{font-size:11px;font-family:var(--font-mono);color:var(--grey-400);margin-top:4px;text-transform:uppercase}
+    .page{max-width:1100px;margin:0 auto;padding:40px 24px;display:grid;grid-template-columns:1fr 380px;gap:32px}
+    .pay-form{background:var(--white);border-radius:14px;border:1px solid var(--grey-200);box-shadow:var(--shadow-sm)}
+    .pay-section{padding:28px 32px;border-bottom:1px solid var(--grey-200)}
+    .pay-section-title{font-size:15px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+    .pay-section-num{width:24px;height:24px;background:var(--grey-900);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px}
+    .field{margin-bottom:16px}
+    .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+    .field input{width:100%;padding:11px;border-radius:8px;border:1.5px solid var(--grey-200);outline:none}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .card-preview{background:linear-gradient(135deg,var(--grey-900) 0%,var(--grey-800) 100%);border-radius:12px;padding:24px;color:white;margin-bottom:20px}
+    .order-summary{background:var(--white);border-radius:14px;border:1px solid var(--grey-200);position:sticky;top:20px}
+    .btn-pay{width:100%;padding:16px;background:var(--grey-900);color:white;border:none;border-radius:var(--radius);font-weight:600;cursor:pointer;font-size:16px}
+    .success-overlay{position:fixed;inset:0;background:rgba(250,250,247,0.98);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:200;text-align:center}
+    .success-overlay.show{display:flex}
+    @media(max-width:900px){.page{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="javascript:void(0)" onclick="anarLanding()" class="logo"><div class="logo-badge">⚡</div>CrackiTrading</a>
+  <div style="font-family:var(--font-mono); font-size:12px; color:var(--grey-400)">🔒 Pagament segur</div>
+</nav>
+
+<div class="steps-nav">
+  <div class="steps-track">
+    <div style="text-align:center"><div class="s-dot done">✓</div><div class="s-label">Registre</div></div>
+    <div class="s-line done"></div>
+    <div style="text-align:center"><div class="s-dot active">2</div><div class="s-label" style="color:black">Pagament</div></div>
+    <div class="s-line"></div>
+    <div style="text-align:center"><div class="s-dot">3</div><div class="s-label">Activació</div></div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="pay-form">
+    <div class="pay-section">
+      <div class="pay-section-title"><span class="pay-section-num">1</span> Dades de facturació</div>
+      <div class="two-col">
+        <div class="field"><label>Nom</label><input type="text" id="nom" placeholder="Joan"></div>
+        <div class="field"><label>Cognom</label><input type="text" id="cognom" placeholder="Garcia"></div>
+      </div>
+      <div class="field"><label>Email</label><input type="email" id="email" placeholder="nom@exemple.com"></div>
+    </div>
+
+    <div class="pay-section">
+      <div class="pay-section-title"><span class="pay-section-num">2</span> Targeta de crèdit</div>
+      <div class="card-preview">
+        <div style="font-size:24px; margin-bottom:20px">💳</div>
+        <div id="cardDisplay" style="font-family:var(--font-mono); font-size:18px; letter-spacing:3px; margin-bottom:20px">•••• •••• •••• ••••</div>
+        <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:12px">
+            <div id="cardName">TITULAR</div>
+            <div id="cardExp">MM/AA</div>
+        </div>
+      </div>
+      <div class="field"><label>Número de targeta</label><input type="text" id="cardNum" placeholder="1234 5678 9012 3456" oninput="formatCard(this)"></div>
+      <div class="two-col">
+        <div class="field"><label>Caducitat</label><input type="text" id="exp" placeholder="MM/AA" maxlength="5"></div>
+        <div class="field"><label>CVV</label><input type="password" id="cvv" placeholder="•••" maxlength="3"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="order-summary">
+    <div style="padding:24px; border-bottom:1px solid var(--grey-200)">
+        <h3 style="font-weight:700; margin-bottom:16px">Resum</h3>
+        <div style="display:flex; justify-content:space-between; font-size:14px"><span>Llicència Atheneum</span><strong>99,00€</strong></div>
+    </div>
+    <div style="padding:24px">
+        <div style="display:flex; justify-content:space-between; font-size:20px; font-weight:800; margin-bottom:20px"><span>Total</span><span>99,00€</span></div>
+        <button class="btn-pay" id="btnPay" onclick="processarPagament()">Pagar i Activar Bot</button>
+    </div>
+  </div>
+</div>
+
+<div class="success-overlay" id="successOverlay">
+    <div style="font-size:60px; margin-bottom:20px">🚀</div>
+    <h1 style="font-size:32px; font-weight:800; margin-bottom:10px">Pagament Completat!</h1>
+    <p style="color:var(--grey-600); margin-bottom:30px">El teu bot Atheneum s'està activant ara mateix.</p>
+    <button onclick="anarDashboard()" class="btn-pay" style="width:auto; padding:14px 40px">Entrar al meu Panell</button>
+</div>
+
+<script>
+  function formatCard(input) {
+    let v = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    let matches = v.match(/\d{4,16}/g);
+    let match = matches && matches[0] || '';
+    let parts = [];
+    for (let i=0, len=match.length; i<len; i+=4) { parts.push(match.substring(i, i+4)); }
+    if (parts.length) { input.value = parts.join(' '); document.getElementById('cardDisplay').textContent = input.value; }
+  }
+
+  function anarLanding() { window.parent.postMessage({ type: 'streamlit:setComponentValue', value: "GOTO_LANDING" }, '*'); }
+  function anarDashboard() { window.parent.postMessage({ type: 'streamlit:setComponentValue', value: "GOTO_DASHBOARD" }, '*'); }
+
+  function processarPagament() {
+    const btn = document.getElementById('btnPay');
+    btn.textContent = "Processant...";
+    btn.disabled = true;
+
+    // Enviem la confirmació de pagament al Python
+    window.parent.postMessage({
+      type: 'streamlit:setComponentValue',
+      value: "PAGAMENT_OK|" + document.getElementById('email').value
+    }, '*');
+
+    setTimeout(() => {
+      document.getElementById('successOverlay').classList.add('show');
+    }, 2000);
+  }
+</script>
+</body>
+</html>

@@ -1,93 +1,103 @@
 <!DOCTYPE html>
-<html class="light" lang="ca">
+<html lang="ca">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Login | Crackitrading</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <script id="tailwind-config">
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        "on-surface-variant": "#67681e",
-                        "primary": "#494a4a",
-                        "surface-container-lowest": "#fefcc9"
-                    },
-                    fontFamily: { 
-                        headline: ["Manrope", "sans-serif"], 
-                        body: ["Inter", "sans-serif"] 
-                    }
-                }
-            }
-        }
-    </script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CrackiTrading — Iniciar sessió</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --cream:#fafaf7;--white:#ffffff;--yellow:#f5e642;--yellow2:#ede034;
+      --grey-100:#f4f4f2;--grey-200:#e8e8e5;--grey-900:#1a1a17;
+      --red:#c0392b;--font-body:'Instrument Sans',sans-serif;--font-mono:'DM Mono',monospace;--radius:10px;
+    }
+    body{min-height:100vh;background:var(--cream);font-family:var(--font-body);display:flex;flex-direction:column}
+    nav{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--grey-200);background:var(--white)}
+    .logo{font-size:18px;font-weight:700;color:var(--grey-900);display:flex;align-items:center;gap:8px;text-decoration:none}
+    .logo-badge{background:var(--yellow);width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px}
+    .page{flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 62px)}
+    .left{background:var(--grey-900);padding:64px;display:flex;flex-direction:column;justify-content:space-between;color:white}
+    .left h2{font-size:40px;letter-spacing:-1.5px;line-height:1.1}
+    .left h2 em{font-style:normal;background:var(--yellow);color:var(--grey-900);padding:0 5px;border-radius:3px}
+    .right{display:flex;align-items:center;justify-content:center;padding:48px 40px}
+    .form-box{width:100%;max-width:400px}
+    .field{margin-bottom:20px}
+    .field label{display:block;font-size:13px;font-weight:600;margin-bottom:7px}
+    .field input{width:100%;padding:12px;border-radius:var(--radius);border:1.5px solid var(--grey-200);outline:none}
+    .field input:focus{border-color:var(--yellow2)}
+    .btn-submit{width:100%;padding:14px;background:var(--grey-900);color:white;border:none;border-radius:var(--radius);font-weight:600;cursor:pointer}
+    .btn-back{display:block;text-align:center;margin-top:20px;font-size:14px;color:var(--grey-600);text-decoration:none}
+    @media(max-width:768px){.left{display:none}.page{grid-template-columns:1fr}}
+  </style>
 </head>
-<body class="bg-surface-container-lowest min-h-screen flex items-center justify-center p-6">
-    <div class="w-full max-w-[440px] bg-white/40 backdrop-blur-2xl rounded-[40px] border border-white/20 shadow-2xl p-10 relative overflow-hidden">
-        
-        <button onclick="tornarALanding()" class="absolute top-6 left-6 text-primary/40 hover:text-primary transition-colors">
-            <span class="material-symbols-outlined">arrow_back</span>
-        </button>
+<body>
 
-        <div class="text-center mb-10">
-            <div class="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-2xl mb-6 shadow-lg rotate-3">
-                <span class="material-symbols-outlined text-white text-3xl">lock</span>
-            </div>
-            <h1 class="font-headline font-800 text-4xl text-primary tracking-tight mb-2">Hola de nou</h1>
-            <p class="font-body text-on-surface-variant font-medium">Accedeix al teu Atheneum</p>
-        </div>
+<nav>
+  <a href="javascript:void(0)" onclick="tornarLanding()" class="logo"><div class="logo-badge">⚡</div>CrackiTrading</a>
+</nav>
 
-        <div class="space-y-6">
-            <div class="space-y-2">
-                <label class="block font-headline font-700 text-sm text-primary ml-1">Correu electrònic</label>
-                <input id="user_email" class="w-full px-6 py-4 bg-white/60 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 transition-all font-body text-primary outline-none" placeholder="jorsercol@gmail.com" type="email"/>
-            </div>
-
-            <div class="space-y-2">
-                <label class="font-headline font-700 text-sm text-primary ml-1">Contrasenya</label>
-                <div class="relative">
-                    <input id="user_pass" class="w-full px-6 py-4 bg-white/60 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 transition-all font-body text-primary outline-none" placeholder="••••••••" type="password"/>
-                </div>
-            </div>
-
-            <button onclick="enviarAlPython()" class="w-full py-4 bg-primary hover:bg-gray-700 text-white font-headline font-700 rounded-2xl shadow-xl shadow-primary/20 transform active:scale-[0.98] transition-all duration-200 mt-4">
-                Entrar a l'Escriptori
-            </button>
-        </div>
-
-        <div class="text-center mt-8">
-            <p class="font-body text-on-surface-variant text-xs">Crackitrading 2026 — Seguretat Encriptada</p>
-        </div>
+<div class="page">
+  <div class="left">
+    <div>
+      <div style="font-family:var(--font-mono); font-size:11px; opacity:0.4; letter-spacing:2px; margin-bottom:20px;">// ADMIN & CLIENT ACCESS</div>
+      <h2>Accedeix al teu<br>panell <em>Cracki</em>Trading</h2>
+      <p style="margin-top:20px; opacity:0.6;">Gestiona les teves claus API, revisa el PnL i configura el risc del bot.</p>
     </div>
+    <div style="font-family:var(--font-mono); font-size:12px; opacity:0.3;">v2.0.1 build_atheneum</div>
+  </div>
 
-    <script>
-        function enviarAlPython() {
-            const email = document.getElementById('user_email').value;
-            const pass = document.getElementById('user_pass').value;
-            
-            if (email && pass) {
-                window.parent.postMessage({
-                    type: 'streamlit:setComponentValue',
-                    value: email + "|" + pass
-                }, '*');
-            } else {
-                alert("Omple les dades, soci!");
-            }
-        }
+  <div class="right">
+    <div class="form-box">
+      <h1 style="font-size:26px; margin-bottom:10px;">Benvingut</h1>
+      <p style="color:var(--grey-600); margin-bottom:30px; font-size:14px;">Identifica't per entrar al sistema.</p>
 
-        function tornarALanding() {
-            window.parent.postMessage({
-                type: 'streamlit:setComponentValue',
-                value: "GOTO_LANDING"
-            }, '*');
-        }
+      <form id="loginForm">
+        <div class="field">
+          <label>Correu electrònic</label>
+          <input type="email" id="email" placeholder="nom@exemple.com" required>
+        </div>
+        <div class="field">
+          <label>Contrasenya</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn-submit" id="btnSubmit">Entrar al panell</button>
+      </form>
+      
+      <a href="javascript:void(0)" onclick="tornarLanding()" class="btn-back">← Tornar a la web</a>
+    </div>
+  </div>
+</div>
 
-        document.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') enviarAlPython();
-        });
-    </script>
+<script>
+  // Funció per tornar a la Landing sense carregar pàgina
+  function tornarLanding() {
+    window.parent.postMessage({ type: 'streamlit:setComponentValue', value: "GOTO_LANDING" }, '*');
+  }
+
+  // ENVIAMENT DE DADES AL PYTHON
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const pass = document.getElementById('password').value;
+    const btn = document.getElementById('btnSubmit');
+
+    btn.textContent = 'Verificant...';
+    btn.disabled = true;
+
+    // Enviem la combinació al app.py
+    const credentials = email + "|" + pass;
+    window.parent.postMessage({
+      type: 'streamlit:setComponentValue',
+      value: credentials
+    }, '*');
+    
+    // Si falla, el Python ja ens mostrarà l'error, però reactivarem el botó passats 2 segons
+    setTimeout(() => {
+        btn.textContent = 'Entrar al panell';
+        btn.disabled = false;
+    }, 2000);
+  });
+</script>
 </body>
 </html>

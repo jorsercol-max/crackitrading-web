@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html class="light" lang="ca">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Crackitrading | El Teu Atheneum Digital</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#494a4a",
+                        "surface-container-high": "#f2f2a6",
+                        "background": "#fffbff"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2 { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-background min-h-screen">
+    <nav class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="bg-primary p-1.5 rounded-lg">
+                <span class="material-symbols-outlined text-white text-xl">psychology</span>
+            </div>
+            <span class="font-800 text-xl text-primary tracking-tight">Atheneum <span class="text-gray-400 font-400 text-sm">v2.0</span></span>
+        </div>
+        
+        <div class="flex items-center gap-4">
+            <span class="text-sm font-medium text-gray-600 hidden md:block">Hola, Jordi</span>
+            <button onclick="logout()" class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-red-50 hover:text-red-600 text-gray-600 rounded-xl transition-all font-semibold text-sm">
+                <span class="material-symbols-outlined text-sm">logout</span>
+                Sortir
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6 space-y-8">
+        
+        <header class="bg-surface-container-high rounded-[32px] p-8 md:p-12 relative overflow-hidden shadow-sm">
+            <div class="relative z-10 max-w-2xl">
+                <h1 class="text-4xl md:text-5xl font-800 text-primary mb-4">El mercat no dorm, <br>el teu bot tampoc.</h1>
+                <p class="text-gray-700 text-lg mb-8">L'algoritme Atheneum està monitoritzant 324 parells de Binance en temps real. Tot sota control.</p>
+                <div class="flex gap-4">
+                    <div class="bg-white/60 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/40">
+                        <p class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Estat del Bot</p>
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
+                            <span class="font-bold text-primary">ACTIU</span>
+                        </div>
+                    </div>
+                    <div class="bg-white/60 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/40">
+                        <p class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Benefici Avui</p>
+                        <span class="font-bold text-primary text-xl">+4,87€</span>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-yellow-200/50 rounded-full blur-3xl"></div>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                <h3 class="font-bold text-gray-400 text-xs uppercase mb-4">Darrera Operació</h3>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="font-800 text-xl text-primary">SOL / USDT</p>
+                        <p class="text-green-600 font-600 text-sm">+1.43% Realitzat</p>
+                    </div>
+                    <span class="material-symbols-outlined text-4xl text-gray-200">trending_up</span>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                <h3 class="font-bold text-gray-400 text-xs uppercase mb-4">Win Rate Mensual</h3>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="font-800 text-xl text-primary">68.4%</p>
+                        <p class="text-gray-500 text-sm">Basat en 142 trades</p>
+                    </div>
+                    <span class="material-symbols-outlined text-4xl text-gray-200">verified</span>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                <h3 class="font-bold text-gray-400 text-xs uppercase mb-4">Mode Algoritme</h3>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="font-800 text-xl text-primary">Estàndard</p>
+                        <p class="text-amber-600 font-600 text-sm">Risc Moderat</p>
+                    </div>
+                    <span class="material-symbols-outlined text-4xl text-gray-200">bolt</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function logout() {
+            // Enviem el senyal a Streamlit per tancar sessió
+            window.parent.postMessage({
+                type: 'streamlit:setComponentValue',
+                value: "GOTO_LANDING"
+            }, '*');
+        }
+    </script>
+</body>
+</html>

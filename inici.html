@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html class="light" lang="ca">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Login | Crackitrading</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "on-surface-variant": "#67681e",
+                        "primary": "#494a4a",
+                        "surface-container-lowest": "#fefcc9"
+                    },
+                    fontFamily: { 
+                        headline: ["Manrope", "sans-serif"], 
+                        body: ["Inter", "sans-serif"] 
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface-container-lowest min-h-screen flex items-center justify-center p-6">
+    <div class="w-full max-w-[440px] bg-white/40 backdrop-blur-2xl rounded-[40px] border border-white/20 shadow-2xl p-10 relative overflow-hidden">
+        
+        <button onclick="tornarALanding()" class="absolute top-6 left-6 text-primary/40 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+
+        <div class="text-center mb-10">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-2xl mb-6 shadow-lg rotate-3">
+                <span class="material-symbols-outlined text-white text-3xl">lock</span>
+            </div>
+            <h1 class="font-headline font-800 text-4xl text-primary tracking-tight mb-2">Hola de nou</h1>
+            <p class="font-body text-on-surface-variant font-medium">Accedeix al teu Atheneum</p>
+        </div>
+
+        <div class="space-y-6">
+            <div class="space-y-2">
+                <label class="block font-headline font-700 text-sm text-primary ml-1">Correu electrònic</label>
+                <input id="user_email" class="w-full px-6 py-4 bg-white/60 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 transition-all font-body text-primary outline-none" placeholder="jorsercol@gmail.com" type="email"/>
+            </div>
+
+            <div class="space-y-2">
+                <label class="font-headline font-700 text-sm text-primary ml-1">Contrasenya</label>
+                <div class="relative">
+                    <input id="user_pass" class="w-full px-6 py-4 bg-white/60 border-none rounded-2xl focus:ring-2 focus:ring-primary/20 transition-all font-body text-primary outline-none" placeholder="••••••••" type="password"/>
+                </div>
+            </div>
+
+            <button onclick="enviarAlPython()" class="w-full py-4 bg-primary hover:bg-gray-700 text-white font-headline font-700 rounded-2xl shadow-xl shadow-primary/20 transform active:scale-[0.98] transition-all duration-200 mt-4">
+                Entrar a l'Escriptori
+            </button>
+        </div>
+
+        <div class="text-center mt-8">
+            <p class="font-body text-on-surface-variant text-xs">Crackitrading 2026 — Seguretat Encriptada</p>
+        </div>
+    </div>
+
+    <script>
+        function enviarAlPython() {
+            const email = document.getElementById('user_email').value;
+            const pass = document.getElementById('user_pass').value;
+            
+            if (email && pass) {
+                window.parent.postMessage({
+                    type: 'streamlit:setComponentValue',
+                    value: email + "|" + pass
+                }, '*');
+            } else {
+                alert("Omple les dades, soci!");
+            }
+        }
+
+        function tornarALanding() {
+            window.parent.postMessage({
+                type: 'streamlit:setComponentValue',
+                value: "GOTO_LANDING"
+            }, '*');
+        }
+
+        document.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') enviarAlPython();
+        });
+    </script>
+</body>
+</html>
